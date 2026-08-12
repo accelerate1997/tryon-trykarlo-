@@ -1,0 +1,73 @@
+# Model weights & checkpoints
+*.ckpt
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.onnx
+*.h5
+checkpoints/
+ckpt/
+weights/
+models/
+pretrained_models/
+*.msgpack
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Environment variables / secrets
+.env
+.env.local
+*.pem
+*.key
+secrets.json
+config_local.py
+
+# Logs & temp/output files
+*.log
+logs/
+output/
+outputs/
+temp/
+tmp/
+*.tmp
+result_images/
+generated/
+
+# OS-specific clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.antigravity/
+
+# Docker build artifacts
+*.tar
+.dockerignore
+
+# Large datasets / test images
+datasets/
+data/
+*.jpg
+*.jpeg
+*.png
+!example/*.jpg
+!example/*.png
