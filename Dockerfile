@@ -82,7 +82,7 @@ RUN pip install --no-cache-dir -r /workspace/requirements.txt
 # --------------------------------------------------------------------------
 
 RUN git clone https://github.com/facebookresearch/detectron2.git /workspace/detectron2
-RUN cd /workspace/detectron2 && pip install --no-cache-dir -e .
+RUN cd /workspace/detectron2 && pip install --no-cache-dir --no-build-isolation -e .
 
 # DensePose is a Detectron2 "project" — it lives in the projects/ subdirectory.
 # We need its Python modules on the path, which handler.py handles at runtime.
