@@ -98,7 +98,7 @@ COPY handler.py /workspace/IDM-VTON/handler.py
 # --------------------------------------------------------------------------
 
 COPY start.sh /workspace/start.sh
-RUN chmod +x /workspace/start.sh
+RUN sed -i 's/\r$//' /workspace/start.sh && chmod +x /workspace/start.sh
 
 # --------------------------------------------------------------------------
 # Environment variables
