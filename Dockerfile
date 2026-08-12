@@ -70,10 +70,13 @@ RUN pip install --no-cache-dir -r /workspace/requirements.txt
 
 # --------------------------------------------------------------------------
 # Install Detectron2 & DensePose support
+# (Set FORCE_CUDA=0 & BUILD_SUBDIR=1 so docker build on CPU nodes doesn't attempt CUDA compilation)
 # --------------------------------------------------------------------------
+ENV FORCE_CUDA="0"
+ENV BUILD_SUBDIR="1"
 
 RUN git clone https://github.com/facebookresearch/detectron2.git /workspace/detectron2
-RUN pip install --no-cache-dir 'git+https://github.com/facebookresearch/detectron2.git'
+RUN pip install --no-cache-dir --no-build-isolation 'git+https://github.com/facebookresearch/detectron2.git'
 
 # DensePose is a Detectron2 "project" — it lives in the projects/ subdirectory.
 # We need its Python modules on the path, which handler.py handles at runtime.
