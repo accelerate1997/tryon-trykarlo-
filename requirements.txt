@@ -1,0 +1,66 @@
+# =============================================================================
+# requirements.txt — Python dependencies for IDM-VTON RunPod Serverless
+# =============================================================================
+#
+# PYTHON VERSION: 3.10 (supplied by the pytorch/pytorch:2.1.2-cuda12.1 base image)
+#
+# WHY PYTHON 3.10 MATTERS:
+#   numpy==1.24.4 and scipy==1.10.1 (required by IDM-VTON's original space)
+#   do NOT install on Python 3.12 — the C extension ABI changed.
+#   Python 3.10 is the sweet spot: old enough for these pinned versions,
+#   new enough for modern diffusers/transformers.
+#
+# TORCH NOTE:
+#   torch, torchvision, torchaudio are already installed in the base Docker
+#   image (pytorch/pytorch:2.1.2-cuda12.1-cudnn8-devel). We do NOT reinstall
+#   them here to avoid version conflicts and to keep build times short.
+#   If you change the base image, update these versions accordingly.
+#
+# DETECTRON2 NOTE:
+#   Detectron2 is NOT listed here — it's built from source in the Dockerfile
+#   because it needs to compile CUDA extensions against your exact GPU driver.
+#
+# =============================================================================
+
+# --- RunPod Serverless SDK ---
+runpod>=1.6.0
+
+# --- Core numerical / image libraries ---
+# Pinned to match the original IDM-VTON HuggingFace Space requirements.
+# numpy 1.24.4 is the last version with the old C ABI — needed by onnxruntime.
+numpy==1.24.4
+scipy==1.10.1
+scikit-image==0.21.0
+pillow==9.4.0
+opencv-python==4.7.0.72
+matplotlib==3.7.4
+tqdm==4.64.1
+
+# --- Diffusion model libraries ---
+diffusers==0.25.0
+transformers==4.36.2
+accelerate==0.26.1
+
+# --- HuggingFace Hub (for downloading model weights in start.sh) ---
+huggingface_hub==0.25.0
+
+# --- Architecture utilities ---
+einops==0.7.0      # tensor manipulation (used in IDM-VTON's UNet code)
+omegaconf==2.3.0   # config system used by DensePose
+config==0.5.1      # generic config loader
+
+# --- ONNX Runtime (for human parsing model — runs SCHP as an ONNX model) ---
+# CPU version is fine here since the parsing model is lightweight.
+onnxruntime==1.16.2
+
+# --- Detectron2 / DensePose dependencies ---
+fvcore             # Facebook's ML utilities — required by Detectron2
+cloudpickle        # Serialisation library used by Detectron2
+pycocotools        # COCO dataset utilities (used by DensePose)
+
+# --- Media utilities ---
+av                 # FFmpeg Python bindings (used by IDM-VTON video utilities)
+
+# --- basicsr (used for super-resolution / image restoration preprocessing) ---
+# Pin-free — latest stable version is fine.
+basicsr
