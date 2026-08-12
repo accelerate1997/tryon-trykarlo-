@@ -69,9 +69,11 @@ COPY requirements.txt /workspace/requirements.txt
 RUN pip install --no-cache-dir -r /workspace/requirements.txt
 
 # --------------------------------------------------------------------------
-# Environment variables for building CUDA extensions without GPU attached
+# Environment variables for CUDA compilation without active GPU attached
 # (RunPod builder nodes don't have active GPUs during docker build)
 # --------------------------------------------------------------------------
+ENV CUDA_HOME="/usr/local/cuda"
+ENV PATH="${CUDA_HOME}/bin:${PATH}"
 ENV FORCE_CUDA="1"
 ENV TORCH_CUDA_ARCH_LIST="7.0 7.5 8.0 8.6 8.9 9.0+PTX"
 
@@ -80,7 +82,7 @@ ENV TORCH_CUDA_ARCH_LIST="7.0 7.5 8.0 8.6 8.9 9.0+PTX"
 # --------------------------------------------------------------------------
 
 RUN git clone https://github.com/facebookresearch/detectron2.git /workspace/detectron2
-RUN cd /workspace/detectron2 && pip install --no-cache-dir --no-build-isolation -e .
+RUN pip install --no-cache-dir --no-build-isolation /workspace/detectron2
 
 # DensePose is a Detectron2 "project" — it lives in the projects/ subdirectory.
 # We need its Python modules on the path, which handler.py handles at runtime.

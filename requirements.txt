@@ -56,6 +56,7 @@ onnxruntime==1.16.2
 # --- Detectron2 / DensePose dependencies ---
 fvcore             # Facebook's ML utilities — required by Detectron2
 iopath             # I/O abstractions — required by Detectron2
+ninja              # Fast C++ compilation builder for PyTorch extensions
 cloudpickle        # Serialisation library used by Detectron2
 pycocotools        # COCO dataset utilities (used by DensePose)
 
