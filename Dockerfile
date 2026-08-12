@@ -47,6 +47,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxext6 \
     libxrender-dev \
     libgomp1 \
+    python3-dev \
     ninja-build \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
@@ -76,7 +77,7 @@ ENV FORCE_CUDA="0"
 ENV BUILD_SUBDIR="1"
 
 RUN git clone https://github.com/facebookresearch/detectron2.git /workspace/detectron2
-RUN pip install --no-cache-dir --no-build-isolation 'git+https://github.com/facebookresearch/detectron2.git'
+RUN cd /workspace/detectron2 && pip install --no-cache-dir --no-build-isolation -e .
 
 # DensePose is a Detectron2 "project" — it lives in the projects/ subdirectory.
 # We need its Python modules on the path, which handler.py handles at runtime.
