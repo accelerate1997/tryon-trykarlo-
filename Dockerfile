@@ -69,16 +69,14 @@ COPY requirements.txt /workspace/requirements.txt
 RUN pip install --no-cache-dir -r /workspace/requirements.txt
 
 # --------------------------------------------------------------------------
+# Environment variables for building CUDA extensions without GPU attached
+# (RunPod builder nodes don't have active GPUs during docker build)
+# --------------------------------------------------------------------------
+ENV FORCE_CUDA="1"
+ENV TORCH_CUDA_ARCH_LIST="7.0 7.5 8.0 8.6 8.9 9.0+PTX"
+
+# --------------------------------------------------------------------------
 # Install Detectron2 from source
-#
-# WHY FROM SOURCE:
-#   Detectron2 has CUDA operator extensions (like ROI Align, DensePose
-#   renderers) that must be compiled against your EXACT CUDA version.
-#   pip wheels only cover a narrow set of CUDA versions, so building from
-#   source is the only reliable approach here.
-#
-# This step takes ~10-15 minutes on first build but is cached by Docker
-# layer caching — only re-runs if requirements.txt changes.
 # --------------------------------------------------------------------------
 
 RUN git clone https://github.com/facebookresearch/detectron2.git /workspace/detectron2
